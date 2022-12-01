@@ -22,9 +22,15 @@ int main(int argc, char *argv[]) {
 
   std::sort(vOutput.begin(), vOutput.end());
   if (!vOutput.empty()) {
+    // Part 1 Solution:
+    std::cout << "Part 1: " << vOutput.back() << std::endl;
+    
+    // Part 2 Solution:
+    int result = 0;
     for (int i = 1; i < 4; i++) {
-      std::cout << vOutput.at(vOutput.size() - i) << std::endl;
+      result += vOutput.at(vOutput.size() - i);
     }
+    std::cout << "Part 2: " << result << std::endl;
   }
   return 0;
 }
