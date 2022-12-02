@@ -4,32 +4,39 @@
 #include <vector>
 #include <algorithm>
 
-#define MAGIC_NUMBER 87
 #define OTHER_MAGIC_NUMBER 64
-
-int selectedPlayerShape(const char &shape) {
-  return (int)shape - MAGIC_NUMBER;
-}
 
 int selectedEnemyShape(const char &shape) {
   return (int)shape - OTHER_MAGIC_NUMBER;
 }
 
-int matchResult(const char &enemy, const char &player) {
-  int enemyShapeSelected = selectedEnemyShape(enemy);
-  int playerShapeSelected = selectedPlayerShape(player);
-  int diff = enemyShapeSelected - playerShapeSelected;
-
-  if (!diff) {
-    return 3;
-  }
-  else if (diff == -1 || diff == 2) {
-    return 6;
-  }
-  else {
-    return 0;
-  }
+int loose (int enemyShape) {
+  if (enemyShape == 1) return 3;
+  else return enemyShape - 1;
 }
+
+int win (int enemyShape) {
+  if (enemyShape == 3) return 1;
+  else return enemyShape + 1;
+}
+
+int matchResult(const char &enemy, const char &player) {
+  int enemyShape = selectedEnemyShape(enemy);
+  switch (player) {
+  case 'X':
+    return 0 + loose(enemyShape);
+    break;
+  case 'Y':
+    return 3 + enemyShape;
+    break;
+  case 'Z':
+    return 6 + win(enemyShape);
+    break;
+  default:
+    return -1;
+    break;
+  }
+ }
 
 int main(int argc, char *argv[]) {
   std::ifstream instream;
@@ -38,8 +45,7 @@ int main(int argc, char *argv[]) {
   std::string strLine;
   int i = 0;
   while (std::getline(instream, strLine)) {
-    i += selectedPlayerShape(strLine.at(2));
     i += matchResult(strLine.at(0), strLine.at(2));
   }
-  std::cout << "Part 1: " << i << std::endl;
+  std::cout << "Part 2: " << i << std::endl;
 }
