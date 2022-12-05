@@ -19,7 +19,7 @@ std::vector<std::stack<char>> crateStacks {
 
 void printTops(const std::vector<std::stack<char>>& stacks) {
   for (int i = 1; i < stacks.size(); i++) {
-    std::cout << "[" << stacks[i].top() << "] ";
+    std::cout << stacks[i].top(); 
   }
   std::cout << std::endl;
 }
@@ -32,7 +32,6 @@ void moveCranes(std::vector<std::stack<char>>& crates,
   for(int i = 0; i < cratesToMove; i++) {
     crates[targetStack].push(crates[sourceStack].top());
     crates[sourceStack].pop();
-    printTops(crates);
   }
 }
 
