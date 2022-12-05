@@ -9,6 +9,7 @@ namespace utils {
     std::vector<int> result;
     std::regex integer_regex("(\\d+)");
 
+    // See: https://en.cppreference.com/w/cpp/regex/regex_iterator
     auto string_begin = std::sregex_iterator(strLine.begin(), strLine.end(), integer_regex);
 
     auto string_end = std::sregex_iterator();
@@ -16,7 +17,6 @@ namespace utils {
     for (std::sregex_iterator i = string_begin; i != string_end; i++) {
       std::smatch sm = *i;
       result.push_back(std::stoi(sm.str()));
-      std::cout << sm.str() << std::endl;
     }
     return result;
   }
