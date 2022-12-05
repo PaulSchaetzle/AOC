@@ -20,4 +20,16 @@ namespace utils {
     }
     return result;
   }
-}
+
+  std::vector<std::string> splitStringAt(const std::string& strString, const char separator) {
+    std::vector<std::string> result;
+    std::size_t pos = 0;
+    std::size_t count = 0;
+    while((count = strString.find(separator, pos)) != std::string::npos) {
+      result.push_back(strString.substr(pos, count - pos));
+      pos = count + 1;
+    }     
+    result.push_back(strString.substr(pos)); // Return the whole string if no separator occurences are found
+    return result;
+  }
+} // namespace utils
