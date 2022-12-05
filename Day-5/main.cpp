@@ -30,8 +30,12 @@ void moveCranes(std::vector<std::stack<char>>& crates,
   int sourceStack = instructions[1];
   int targetStack = instructions.back();
   for(int i = 0; i < cratesToMove; i++) {
-    crates[targetStack].push(crates[sourceStack].top());
+    crates[0].push(crates[sourceStack].top());
     crates[sourceStack].pop();
+  }
+  for(int i = 0; i < cratesToMove; i++) {
+    crates[targetStack].push(crates[0].top());
+    crates[0].pop();
   }
 }
 
