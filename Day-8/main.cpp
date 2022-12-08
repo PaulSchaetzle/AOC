@@ -3,13 +3,13 @@
 #include <fstream>
 #include <vector>
 
-void parseInput(std::vector<std::vector<int>>& forrest) {
+void parseInput(std::vector<std::vector<long>>& forrest) {
   std::ifstream inputFile;
   inputFile.open("inputs.txt");
 
   std::string strLine;
   for(int i = 0; std::getline(inputFile, strLine); i++) {
-    std::vector<int> trees;
+    std::vector<long> trees;
     for(int j = 0; j < strLine.size(); j++) {
       trees.push_back((int)(strLine.at(j) - 48)); // see ascii table
     }
@@ -17,7 +17,7 @@ void parseInput(std::vector<std::vector<int>>& forrest) {
   }
 }
 
-void print(const std::vector<std::vector<int>>& forrest) {
+void print(const std::vector<std::vector<long>>& forrest) {
   for(auto trees : forrest) {
     for(auto tree : trees) {
       std::cout << tree << ", ";
@@ -26,7 +26,7 @@ void print(const std::vector<std::vector<int>>& forrest) {
   }
 }
 
-bool visibleTree(const std::vector<std::vector<int>>& forrest, int x, int y) {
+bool visibleTree(const std::vector<std::vector<long>>& forrest, int x, int y) {
   int treeColSize = forrest.size();
   int treeRowSize = forrest[y].size();
 
@@ -37,20 +37,32 @@ bool visibleTree(const std::vector<std::vector<int>>& forrest, int x, int y) {
 
   if((((x || y) == 0) || (x == (treeRowSize - 1) || y == (treeColSize - 1)))) return true;
   for(int i = 0; i < x; i++) 
-    if(forrest[y][i] >= forrest[y][x]) visibleLeft = false;
+    if(forrest[y][i] >= forrest[y][x]) {
+      visibleLeft = false;
+      break;
+    }
   for(int i = x + 1 ; i < treeRowSize; i++)
-    if(forrest[y][i] >= forrest[y][x]) visibleRight = false;
+    if(forrest[y][i] >= forrest[y][x]) {
+      visibleRight = false;
+      break;
+    }
   for(int i = 0; i < y; i++)
-    if(forrest[i][x] >= forrest[y][x]) visibleTop = false;
+    if(forrest[i][x] >= forrest[y][x]) {
+      visibleTop = false;
+      break;
+    }
   for(int i = y + 1; i < treeColSize; i++)
-    if(forrest[i][x] >= forrest[y][x]) visibleBottom = false;
+    if(forrest[i][x] >= forrest[y][x]) {
+      visibleBottom = false;
+      break;
+    }
   if(visibleLeft || visibleRight || visibleTop || visibleBottom) {
     return true;
   }
   return false;
 }
 
-int scenicScore(const std::vector<std::vector<int>>& forrest, int x, int y) {
+int scenicScore(const std::vector<std::vector<long>>& forrest, int x, int y) {
   int treeColSize = forrest.size();
   int treeRowSize = forrest[y].size();
 
@@ -83,15 +95,15 @@ int scenicScore(const std::vector<std::vector<int>>& forrest, int x, int y) {
 }
 
 int main(int argc, char *argv[]) {
-  std::vector<std::vector<int>> forrest;
+  std::vector<std::vector<long>> forrest;
   parseInput(forrest);
-  int result = 0;
-  int maxScenicScore = 0;
+  size_t result = 0;
+  size_t maxScenicScore = 0;
   for (int y = 0; y < forrest.size(); y++) {
     for (int x = 0; x < forrest[y].size(); x++) {
-      if (visibleTree(forrest, x, y)) {
-	result++;
-      }
+       if (visibleTree(forrest, x, y)) {
+       	result++;
+       }
       int temp = scenicScore(forrest, x, y);
       if (temp > maxScenicScore)
 	maxScenicScore = temp;
