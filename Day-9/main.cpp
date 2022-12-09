@@ -39,27 +39,31 @@ void tailAdjust(struct rope& tail, const rope& head) {
   int dX = head.X - tail.X;
   int dY = head.Y - tail.Y;
 
-  if(((head.X - tail.X) > 1)) {
+  if((dX) > 1) {
     moveRight(tail);
-    tail.Y = head.Y;
+    if(dY > 0) moveUp(tail);
+    else if(dY < 0) moveDown(tail);
     std::cout << "move Right" << std::endl;
   }
 
-  else if(((head.X - tail.X) < -1)) {
+  else if(dX < -1) {
     moveLeft(tail);
-    tail.Y = head.Y;
+    if(dY > 0) moveUp(tail);
+    else if(dY < 0) moveDown(tail);
     std::cout << "move Left" << std::endl;
   }
 
-  else if((head.Y - tail.Y) > 1) {
+  else if(dY > 1) {
     moveUp(tail);
-    tail.X = head.X;
+    if(dX > 0) moveRight(tail);
+    else if(dX < 0) moveLeft(tail);
     std::cout << "move Up" << std::endl;
   }
 
-  else if(((head.Y - tail.Y) < -1)) {
+  else if(dY < -1) {
     moveDown(tail);
-    tail.X = head.X;
+    if(dX > 0) moveRight(tail);
+    else if(dX < 0) moveLeft(tail);
     std::cout << "move Down" << std::endl;
   }
 }
