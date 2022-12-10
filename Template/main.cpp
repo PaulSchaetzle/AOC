@@ -9,4 +9,7 @@ int main(int argc, char *argv[]) {
   std::string strLine;
   while (std::getline(inputFile, strLine)) {
   }
+
+  std::cout << "Part 1: " << std::endl;
+  std::cout << "Part 2: " << std::endl;
 }
