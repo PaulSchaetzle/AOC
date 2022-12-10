@@ -4,21 +4,30 @@
 #include "../Utils/util.h"
 
 void calculateSignalStrength(const int& cycle, const int& X, int& rssi) {
-  std::cout << "Cycle: " << cycle << " X: " << X << " RSSI: "  << rssi << std::endl;
   rssi += cycle * X;
+}
+
+void drawScreen(const int& cycle, const int& X) {
+  int position = cycle - ((cycle / 40) * 40) -1; // looks goofy but works
+  if((position == X) || (position == X-1) || (position == X+1))
+    std::cout << '#';
+  else
+    std::cout << '.';
+  if(!(cycle % 40)) std::cout << std::endl;
 }
 
 void noop(int& cycle, const int X, int& rssi) {
   if(!((cycle+20) % 40)) calculateSignalStrength(cycle, X, rssi);
+  drawScreen(cycle, X);
   cycle++;
 }
 
 void addx(int& cycle, int& X, int dX, int& rssi) {
   for(int i = 0; i < 2; i++) {
     if(!((cycle + 20) % 40)) calculateSignalStrength(cycle, X, rssi);
+    drawScreen(cycle, X);
     cycle++;
   }
-  std::cout << "X: " << X << " dX: " << dX << std::endl;
   X += dX;
 }
 
